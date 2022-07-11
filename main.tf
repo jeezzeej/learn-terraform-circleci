@@ -8,7 +8,17 @@ provider "aws" {
   }
 }
 
+
 resource "random_uuid" "randomid" {}
+
+resource "aws_iam_user" "circleci" {
+  name = var.user
+  path = "/system/"
+}
+
+resource "aws_iam_access_key" "circleci" {
+  user = aws_iam_user.circleci.name
+}
 
 resource "aws_s3_bucket" "app" {
   tags = {
